@@ -14,9 +14,10 @@ const db = mysql.createConnection(
   {
     host: "localhost",
     user: "root",
-    password: "Rootsql",
+    password: "CheeseBalls4!5",
     database: "employee_db",
   },
+  console.table('EMPLOYEE MANAGER'),
   console.log(`Connected to the employee_db database.`)
 );
 db.connect(); 
@@ -25,10 +26,9 @@ openApp();
 
 async function openApp() {
  
-  let decision = inquirer.prompt([
+   inquirer.prompt(
     
     {
-      name: "choices",
       type: "list",
       message: "Select an option",
       choices: [
@@ -39,13 +39,13 @@ async function openApp() {
         "Add role",
         "Add employee",
         "Update employee role",
-        "Exit",
-      ],
+        "Exit"],
+        name: "option",
     },
-  ]);
-  switch (
-    decision.choices 
-  ) {
+  ).then(function(answer){
+
+    switch (
+    answer.option) {
     case "View departments":
       selectDepartment();
       break;
@@ -70,8 +70,9 @@ async function openApp() {
     case "Exit":
       exit();
       break;
-  }
-}
+    }
+  })
+};
 async function selectEmployees() {
   
   const employee = await db.query(`
@@ -215,9 +216,3 @@ async function addDepartment() {
   console.table(addDepartment);
   openApp();
 }
-
-// // Function to exit the application
-// async function exit() {
-//   console.log("Thank you for choosing Team Viewer, please press Ctrl + C to end this program; goodbye!");
-//   return;
-// }
